@@ -4,6 +4,8 @@ import com.fundamentos.springboot.fundamentos.bean.MyBean;
 import com.fundamentos.springboot.fundamentos.bean.MybeanProperties;
 import com.fundamentos.springboot.fundamentos.component.ComponentDependency;
 import com.fundamentos.springboot.fundamentos.pojo.UserPojo;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FundamentosApplication implements CommandLineRunner {
 	//inyeccion de dependencias
+	private final Log logger= LogFactory.getLog(FundamentosApplication.class);
 	private ComponentDependency componentDependency;
 	private MyBean myBean;
 
@@ -36,5 +39,10 @@ public class FundamentosApplication implements CommandLineRunner {
 		myBean.print();
 		System.out.println(mybeanProperties.function());
 		System.out.println(userPojo.getEmail());
+		try {
+
+		}catch (Exception e){
+			logger.debug("debug");
+		}
 	}
 }
