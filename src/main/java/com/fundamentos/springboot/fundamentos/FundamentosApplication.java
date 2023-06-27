@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -45,6 +46,8 @@ public class FundamentosApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {// ejemplosAnteriores();
 	saveUsersInDataBase();
+	getInformationJpqlFromUser();
+
 	}
 
 	private  void ejemplosAnteriores(){
@@ -68,5 +71,13 @@ public class FundamentosApplication implements CommandLineRunner {
 		User usuariseis= new User("usuariseis","usuariseis@gmail.com", LocalDate.of(2023,12,30));
 		List<User>list= Arrays.asList(usuarioUno,usuariodos,usuariotres,usuariocuatro,usuariocinco,usuariseis);
 		list.stream().forEach(userRepository::save);
+	}
+
+	private  void getInformationJpqlFromUser(){
+		logger.info(userRepository.findByEmail
+				("juan@gmail.com").orElseThrow(()->new RuntimeException("Email no encontrado")));
+		userRepository.findAndSort("user", Sort.by("id").descending())
+		.stream()
+				.forEach(user -> logger.info("usuario con metodo sort"+user));
 	}
 }
