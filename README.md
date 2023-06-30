@@ -1,0 +1,2 @@
+Que son los Query methods?
+Es un metodo que se muestra por medio de una interface para hacer consultas personalizadas a bases de datos que esten el contexto de repositorios de spring data.facilita al forma de escribir consultas mediante clases=tablas filas=atributos columnas=valores. 

@@ -22,13 +22,13 @@ import java.util.List;
 public class FundamentosApplication implements CommandLineRunner {
 	//inyeccion de dependencias
 	private final Log logger= LogFactory.getLog(FundamentosApplication.class);
-	private ComponentDependency componentDependency;
-	private MyBean myBean;
+	private final ComponentDependency componentDependency;
+	private final MyBean myBean;
 
-	private MybeanProperties mybeanProperties;
-	private UserPojo userPojo;
+	private final MybeanProperties mybeanProperties;
+	private final UserPojo userPojo;
 
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependency componentDependency,MyBean
 			myBean ,MybeanProperties mybeanProperties,UserPojo userPojo,UserRepository userRepository) {
@@ -77,7 +77,9 @@ public class FundamentosApplication implements CommandLineRunner {
 		logger.info(userRepository.findByEmail
 				("juan@gmail.com").orElseThrow(()->new RuntimeException("Email no encontrado")));
 		userRepository.findAndSort("user", Sort.by("id").descending())
-		.stream()
 				.forEach(user -> logger.info("usuario con metodo sort"+user));
+
+		userRepository.findByName("juan")
+				.forEach(user -> logger.info("User con quety method "+user));
 	}
 }
