@@ -18,6 +18,8 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
+
 @SpringBootApplication
 public class FundamentosApplication implements CommandLineRunner {
 	//inyeccion de dependencias
@@ -80,6 +82,18 @@ public class FundamentosApplication implements CommandLineRunner {
 				.forEach(user -> logger.info("usuario con metodo sort"+user));
 
 		userRepository.findByName("juan")
-				.forEach(user -> logger.info("User con quety method "+user));
+				.forEach(user -> logger.info("User con query method "+user));
+
+		userRepository.findbyNameLike("%user%")
+				.forEach(user -> logger.info("User find by name like"+user));
+
+		userRepository.findByNameOrEmail(null,"juan@gmail.com")
+				.forEach(user -> logger.info("usuario por email o nombre"+user));
+
+		userRepository.findByBrithDateBetween(LocalDate.of(2023,1,1),LocalDate.of(2023,12,31))
+		.forEach(user->logger.info("usuario con intervalo de fechas: "+user));
+
+		userRepository.findByNameLikeOrderByIdDesc("%user%")
+				.forEach(user-> logger.info("usuario ordeado desendiente: "+user));
 	}
 }
