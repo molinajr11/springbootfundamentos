@@ -1,9 +1,11 @@
 package com.fundamentos.springboot.fundamentos.repository;
 
+import com.fundamentos.springboot.fundamentos.Dto.UserDto;
 import com.fundamentos.springboot.fundamentos.entity.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -27,5 +29,11 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     List<User>findByNameLikeOrderByIdDesc(String name);
 
-
+    @Query("select new com.fundamentos.springboot.fundamentos.Dto.UserDto(u.id,u.name,u.brithDate)"+
+            "from User  u"+
+            " where u.brithDate=:parametroFecha"+
+            " and u.email=:parametroEmail"
+    )
+    Optional<UserDto>getAllByBirthDateAndEmail(@Param("parametroFecha") LocalDate date,
+                                               @Param("parametroEmail")String email);
 }

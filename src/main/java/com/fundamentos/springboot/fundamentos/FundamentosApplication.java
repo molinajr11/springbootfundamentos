@@ -95,5 +95,11 @@ public class FundamentosApplication implements CommandLineRunner {
 
 		userRepository.findByNameLikeOrderByIdDesc("%user%")
 				.forEach(user-> logger.info("usuario ordeado desendiente: "+user));
+
+		userRepository.getAllByBirthDateAndEmail(LocalDate.of(2023,03,1),"molinajunior10@gmail.com")
+				.orElseThrow(()-> new RuntimeException("No found user with parameters	"));
+		;
+
+
 	}
 }
